@@ -307,19 +307,7 @@ class _SpoilerWidgetState extends State<SpoilerWidget>
                 repaint: particleAnimation,
                 circleImage: circleImage!,
               ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            widget.child,
-            CustomPaint(
-              foregroundPainter: HolePainter(
-                radius: fadeRadius,
-                center: fadeOffset,
-              ),
-              child: widget.child,
-            ),
-          ],
-        ),
+        child: widget.child,
       ),
     );
   }
