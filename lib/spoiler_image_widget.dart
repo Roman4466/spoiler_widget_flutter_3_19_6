@@ -172,7 +172,7 @@ class _SpoilerWidgetState extends State<SpoilerWidget>
       if (fadeAnimationController == null) {
         stopAnimation();
       } else {
-        fadeAnimationController!.toggle().whenCompleteOrCancel(() {
+        fadeAnimationController!.forward().whenCompleteOrCancel(() {
           stopAnimation();
         });
       }
