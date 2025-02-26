@@ -7,9 +7,7 @@ import 'package:spoiler_widget/models/spoiler_configs.dart';
 /// [imageFilter] is the image filter to be applied
 @immutable
 class WidgetSpoilerConfiguration extends SpoilerConfiguration {
-  final ImageFilter imageFilter;
   const WidgetSpoilerConfiguration({
-    required this.imageFilter,
     super.particleDensity = 20,
     super.speedOfParticles = 0.2,
     super.particleColor = Colors.white70,

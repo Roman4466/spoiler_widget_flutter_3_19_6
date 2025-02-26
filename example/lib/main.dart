@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:spoiler_widget/spoiler_widget.dart';
@@ -58,7 +56,6 @@ class _MainAppState extends State<MainApp> {
                   fadeRadius: 3,
                   fadeAnimation: true,
                   enableGesture: true,
-                  imageFilter: ImageFilter.blur(sigmaX: 30.0, sigmaY: 30.0),
                 ),
                 child: CachedNetworkImage(imageUrl: url),
               ),

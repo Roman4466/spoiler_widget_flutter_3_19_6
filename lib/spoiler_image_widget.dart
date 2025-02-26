@@ -311,17 +311,12 @@ class _SpoilerWidgetState extends State<SpoilerWidget>
           alignment: Alignment.center,
           children: [
             widget.child,
-            ImageFiltered(
-              imageFilter: widget.configuration.imageFilter,
-              enabled: (fadeAnimationController != null && fadeRadius > 0) ||
-                  enabled,
-              child: CustomPaint(
-                foregroundPainter: HolePainter(
-                  radius: fadeRadius,
-                  center: fadeOffset,
-                ),
-                child: widget.child,
+            CustomPaint(
+              foregroundPainter: HolePainter(
+                radius: fadeRadius,
+                center: fadeOffset,
               ),
+              child: widget.child,
             ),
           ],
         ),
