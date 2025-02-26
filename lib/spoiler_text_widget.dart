@@ -88,7 +88,7 @@ class _SpoilerTextWidgetState extends State<SpoilerTextWidget>
     if (widget.configuration.fadeAnimation) {
       fadeAnimationController = AnimationController(
         value: enabled ? 0 : 1,
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 1000),
         vsync: this,
       );
       fadeAnimation =
