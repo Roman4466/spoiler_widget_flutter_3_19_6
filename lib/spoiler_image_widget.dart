@@ -29,7 +29,10 @@ class _SpoilerWidgetState extends State<SpoilerWidget> with TickerProviderStateM
   AnimationController? fadeAnimationController;
   Animation<double>? fadeAnimation;
   Timer? timer;
-  ui.Image? circleImage;
+  final ui.Image circleImage = CircleImageFactory.create(
+    color: Colors.white70,
+    diameter: 1,
+  );
 
   late final AnimationController particleAnimationController;
   late final Animation<double> particleAnimation;
@@ -115,13 +118,6 @@ class _SpoilerWidgetState extends State<SpoilerWidget> with TickerProviderStateM
       widget.configuration.maxParticleSize.isFinite && widget.configuration.maxParticleSize >= 1,
       'Invalid maxParticleSize',
     );
-
-    setState(() {
-      circleImage = CircleImageFactory.create(
-        color: widget.configuration.particleColor,
-        diameter: widget.configuration.maxParticleSize,
-      );
-    });
 
     super.initState();
   }
@@ -273,27 +269,18 @@ class _SpoilerWidgetState extends State<SpoilerWidget> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTapDown: (details) {
-        if (widget.configuration.enableGesture) {
-          _onEnabledChanged(!enabled);
-          fadeOffset = details.localPosition;
-        }
-      },
-      child: CustomPaint(
-        foregroundPainter: ImageSpoilerPainter(
-          isEnabled: enabled,
-          fadeRadius: fadeRadius,
-          currentRect: spoilerBounds,
-          tapOffset: fadeOffset,
-          particles: particles.values.toList(),
-          onBoundariesCalculated: initializeOffsets,
-          repaint: particleAnimation,
-          circleImage: circleImage!,
-        ),
-        child: widget.child,
-      ),
+    return CustomPaint(
+      foregroundPainter: ImageSpoilerPainter(
+              isEnabled: enabled,
+              fadeRadius: fadeRadius,
+              currentRect: spoilerBounds,
+              tapOffset: fadeOffset,
+              particles: particles.values.toList(),
+              onBoundariesCalculated: initializeOffsets,
+              repaint: particleAnimation,
+              circleImage: circleImage,
+            ),
+      child: widget.child,
     );
   }
 }
