@@ -139,10 +139,6 @@ class _SpoilerWidgetState extends State<SpoilerWidget> with TickerProviderStateM
 
   @override
   void didUpdateWidget(covariant SpoilerWidget oldWidget) {
-    if (oldWidget != widget) {
-      // particles.clear();
-    }
-
     if (oldWidget.configuration.isEnabled != widget.configuration.isEnabled) {
       _onEnabledChanged(widget.configuration.isEnabled);
     }
@@ -157,13 +153,7 @@ class _SpoilerWidgetState extends State<SpoilerWidget> with TickerProviderStateM
       particleAnimationController.repeat();
       fadeAnimationController?.forward();
     } else {
-      if (fadeAnimationController == null) {
-        stopAnimation();
-      } else {
-        fadeAnimationController!.reverse().whenCompleteOrCancel(() {
-          stopAnimation();
-        });
-      }
+      stopAnimation();
     }
   }
 
