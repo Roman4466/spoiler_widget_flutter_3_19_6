@@ -15,6 +15,7 @@ class SpoilerWidget extends StatefulWidget {
     required this.child,
     required this.configuration,
   });
+
   final Widget child;
   final WidgetSpoilerConfiguration configuration;
 
@@ -22,8 +23,7 @@ class SpoilerWidget extends StatefulWidget {
   State createState() => _SpoilerWidgetState();
 }
 
-class _SpoilerWidgetState extends State<SpoilerWidget>
-    with TickerProviderStateMixin {
+class _SpoilerWidgetState extends State<SpoilerWidget> with TickerProviderStateMixin {
   final rnd = Random();
 
   AnimationController? fadeAnimationController;
@@ -62,8 +62,7 @@ class _SpoilerWidgetState extends State<SpoilerWidget>
 
     debugPrint('initializeOffsets $spoilerBounds');
 
-    final count =
-        (rect.width + rect.height) * widget.configuration.particleDensity * 2;
+    final count = (rect.width + rect.height) * widget.configuration.particleDensity * 2;
 
     for (int index = 0; index < count; index++) {
       particles[index] = randomParticle(rect);
@@ -72,12 +71,9 @@ class _SpoilerWidgetState extends State<SpoilerWidget>
     timer = Timer.periodic(
       const Duration(seconds: 1),
       (timer) {
-        Future.delayed(Duration(milliseconds: Random().nextInt(3000)),
-            _randomWaveAnimation);
-        Future.delayed(Duration(milliseconds: Random().nextInt(3000)),
-            _randomWaveAnimation);
-        Future.delayed(Duration(milliseconds: Random().nextInt(3000)),
-            _randomWaveAnimation);
+        Future.delayed(Duration(milliseconds: Random().nextInt(3000)), _randomWaveAnimation);
+        Future.delayed(Duration(milliseconds: Random().nextInt(3000)), _randomWaveAnimation);
+        Future.delayed(Duration(milliseconds: Random().nextInt(3000)), _randomWaveAnimation);
       },
     );
   }
@@ -97,8 +93,7 @@ class _SpoilerWidgetState extends State<SpoilerWidget>
   void initState() {
     particleAnimationController =
         AnimationController(duration: const Duration(seconds: 1), vsync: this);
-    particleAnimation = Tween<double>(begin: 0, end: 1)
-        .animate(particleAnimationController)
+    particleAnimation = Tween<double>(begin: 0, end: 1).animate(particleAnimationController)
       ..addListener(_myListener);
 
     if (widget.configuration.fadeAnimation) {
@@ -106,8 +101,7 @@ class _SpoilerWidgetState extends State<SpoilerWidget>
         duration: const Duration(milliseconds: 300),
         vsync: this,
       );
-      fadeAnimation = Tween<double>(begin: 0, end: 1)
-          .animate(fadeAnimationController!)
+      fadeAnimation = Tween<double>(begin: 0, end: 1).animate(fadeAnimationController!)
         ..addListener(updateRadius);
     }
 
@@ -118,8 +112,7 @@ class _SpoilerWidgetState extends State<SpoilerWidget>
     }
 
     assert(
-      widget.configuration.maxParticleSize.isFinite &&
-          widget.configuration.maxParticleSize >= 1,
+      widget.configuration.maxParticleSize.isFinite && widget.configuration.maxParticleSize >= 1,
       'Invalid maxParticleSize',
     );
 
@@ -141,9 +134,8 @@ class _SpoilerWidgetState extends State<SpoilerWidget>
 
           // If particle is dead, replace it with a new one
           // Otherwise, move it
-          particles[index] = offset!.life <= 0.1
-              ? randomParticle(offset.rect)
-              : offset.moveToRandomAngle();
+          particles[index] =
+              offset!.life <= 0.1 ? randomParticle(offset.rect) : offset.moveToRandomAngle();
         }
       },
     );
@@ -221,8 +213,7 @@ class _SpoilerWidgetState extends State<SpoilerWidget>
     final maxRadius = spoilerBounds.shortestSide ~/ 4;
     if (maxRadius == 0) return;
     final awayRadius = rnd.nextInt(maxRadius);
-    final animationController =
-        waveAnimationControllers[offset.hashCode] ??= AnimationController(
+    final animationController = waveAnimationControllers[offset.hashCode] ??= AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
     );
@@ -255,21 +246,17 @@ class _SpoilerWidgetState extends State<SpoilerWidget>
         10 * sin(randomAngle),
       );
 
-      final clampedRandomEndPoint =
-          spoilerBounds.getNearestPoint(randomEndPoint);
+      final clampedRandomEndPoint = spoilerBounds.getNearestPoint(randomEndPoint);
 
       final anim = TweenSequence<Offset>([
+        TweenSequenceItem(tween: Tween(begin: current, end: possibleEndPoint), weight: 50),
         TweenSequenceItem(
-            tween: Tween(begin: current, end: possibleEndPoint), weight: 50),
-        TweenSequenceItem(
-            tween: Tween(begin: possibleEndPoint, end: clampedRandomEndPoint),
-            weight: 50),
+            tween: Tween(begin: possibleEndPoint, end: clampedRandomEndPoint), weight: 50),
       ]).animate(curvedAnimation);
 
       void waveAnimationListener() {
         if (!enabled || particles.isEmpty) return;
-        particles[index] =
-            current.copyWith(dx: anim.value.dx, dy: anim.value.dy);
+        particles[index] = current.copyWith(dx: anim.value.dx, dy: anim.value.dy);
 
         if (animationController.isCompleted) {
           anim.removeListener(waveAnimationListener);
@@ -295,18 +282,16 @@ class _SpoilerWidgetState extends State<SpoilerWidget>
         }
       },
       child: CustomPaint(
-        foregroundPainter: circleImage == null
-            ? null
-            : ImageSpoilerPainter(
-                isEnabled: enabled,
-                fadeRadius: fadeRadius,
-                currentRect: spoilerBounds,
-                tapOffset: fadeOffset,
-                particles: particles.values.toList(),
-                onBoundariesCalculated: initializeOffsets,
-                repaint: particleAnimation,
-                circleImage: circleImage!,
-              ),
+        foregroundPainter: ImageSpoilerPainter(
+          isEnabled: enabled,
+          fadeRadius: fadeRadius,
+          currentRect: spoilerBounds,
+          tapOffset: fadeOffset,
+          particles: particles.values.toList(),
+          onBoundariesCalculated: initializeOffsets,
+          repaint: particleAnimation,
+          circleImage: circleImage!,
+        ),
         child: widget.child,
       ),
     );
@@ -321,6 +306,7 @@ class ImageSpoilerPainter extends CustomPainter {
   final ValueSetter<Rect> onBoundariesCalculated;
   final bool isEnabled;
   final ui.Image circleImage;
+
   const ImageSpoilerPainter({
     required this.isEnabled,
     required this.currentRect,
@@ -391,7 +377,8 @@ class ImageSpoilerPainter extends CustomPainter {
       rects,
       colors,
       BlendMode.srcOver,
-      null, // CullRect if needed
+      null,
+      // CullRect if needed
       Paint(),
     );
   }
@@ -427,6 +414,7 @@ class HolePainter extends CustomPainter {
   final Offset center;
 
   HolePainter({super.repaint, required this.radius, required this.center});
+
   @override
   void paint(Canvas canvas, Size size) {
     if (radius == 0) {
