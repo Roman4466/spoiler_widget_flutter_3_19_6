@@ -140,7 +140,7 @@ class _SpoilerWidgetState extends State<SpoilerWidget> with TickerProviderStateM
   @override
   void didUpdateWidget(covariant SpoilerWidget oldWidget) {
     if (oldWidget != widget) {
-      particles.clear();
+      // particles.clear();
     }
 
     if (oldWidget.configuration.isEnabled != widget.configuration.isEnabled) {
